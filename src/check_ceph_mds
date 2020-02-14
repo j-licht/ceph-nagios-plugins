@@ -109,7 +109,7 @@ def check_target_mds(mds_stat, fs_name, name):
     # find mds from standby list
     standby_mdss = _get_standby_mds(mds_stat)
     for mds in standby_mdss:
-        if mds.get_name() == name:
+        if mds.get_name() == name.encode('utf8'):
             print("MDS OK: %s" % (mds))
             return STATUS_OK
 
@@ -118,7 +118,7 @@ def check_target_mds(mds_stat, fs_name, name):
 
     if active_mdss:
         for mds in active_mdss:
-            if mds.get_name() != name:
+            if mds.get_name() != name.encode('utf8'):
                 continue
             # target mds in active list
             print("MDS %s: %s" % ("WARN" if mds.is_laggy() else "OK", mds))
